@@ -19,20 +19,10 @@ export default {
             component: 'PersonSet'
         },
         {
-            key: '/app/table',
-            title: '优惠卷管理',
+            key: '/app/blogsList',
+            title: '博客管理',
             icon: 'copy',
-            subs: [{
-                    key: '/app/table/basicTable',
-                    title: '优惠卷模板',
-                    component: 'Buttons'
-                },
-                {
-                    key: '/app/table/advancedTable',
-                    title: '优惠卷核销列表',
-                    component: 'Buttons'
-                }
-            ],
+            component: 'BlogsList',
         },
         {
             key: '/app/form',
@@ -106,5 +96,11 @@ export default {
             ],
         }
     ],
-    others: [] // 非菜单相关路由
+    others: [
+        {
+            key: '/app/writeblogs',
+            title: '写博客',
+            component: 'Writeblogs',
+        }
+    ] // 非菜单相关路由
 }

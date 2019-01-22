@@ -274,6 +274,7 @@ module.exports = {
 						exclude: cssModuleRegex,
 						use: getStyleLoaders({
 							importLoaders: 1,
+							modules: true
 						}),
 					},
 					// Adds support for CSS Modules (https://github.com/css-modules/css-modules)
@@ -314,7 +315,7 @@ module.exports = {
 						test: lessRegex,
 						exclude: lessModuleRegex,
 						use: [
-							...getStyleLoaders({ importLoaders: 2 }, 'less-loader'),
+							...getStyleLoaders({ importLoaders: 2}, 'less-loader'),
 							// {
 							// 	loader: require.resolve('less-loader'),
 							// 		options: {

@@ -1,0 +1,72 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-menu-root.ant-menu-inline,
+.ant-menu-root.ant-menu-vertical {
+  background: #313653;
+  border-right: 1px solid #313653;
+  color: #ffffff;
+}
+.ant-menu-root.ant-menu-inline a,
+.ant-menu-root.ant-menu-vertical a {
+  color: #ffffff;
+}
+.ant-menu-root.ant-menu-inline .ant-menu-submenu-selected,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu-selected {
+  color: #ffffff;
+}
+.ant-menu-root.ant-menu-inline .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+.ant-menu-root.ant-menu-vertical .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+.ant-menu-root.ant-menu-inline .ant-menu-submenu-active,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu-active {
+  color: #ffffff;
+}
+.ant-menu-root.ant-menu-inline .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+.ant-menu-root.ant-menu-inline .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu-title .ant-menu-submenu-arrow::after {
+  background: #ffffff;
+}
+.ant-menu-root.ant-menu-inline .ant-menu-submenu-title:hover,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu-title:hover {
+  color: #ffffff;
+}
+.ant-menu-root.ant-menu-inline .ant-menu-submenu-title:hover .ant-menu-submenu-arrow::before,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu-title:hover .ant-menu-submenu-arrow::before,
+.ant-menu-root.ant-menu-inline .ant-menu-submenu-title:hover .ant-menu-submenu-arrow::after,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu-title:hover .ant-menu-submenu-arrow::after {
+  background: #ffffff;
+}
+.ant-menu-root.ant-menu-inline .ant-menu-submenu > .ant-menu,
+.ant-menu-root.ant-menu-vertical .ant-menu-submenu > .ant-menu {
+  background-color: rgba(58, 64, 99, 0.15);
+}
+.ant-menu-root.ant-menu-inline .ant-menu-item > a:hover,
+.ant-menu-root.ant-menu-vertical .ant-menu-item > a:hover {
+  color: #ffffff;
+}
+[class*=btn] {
+  cursor: pointer;
+}
+.bg--primary {
+  background: #313653;
+}
+.header {
+  padding: 0;
+  padding-right: 40px;
+  height: 65px;
+}
+.header .ant-menu {
+  background: transparent;
+  color: #ffffff;
+}
+.header .ant-menu .ant-menu-item:hover {
+  color: #ffffff;
+}
+.header__trigger {
+  color: #ffffff;
+}
+.ant-layout-content {
+  min-height: auto;
+}

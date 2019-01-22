@@ -24,6 +24,7 @@ class Login extends React.Component {
   }
   // 登录
   handleSubmit = e => {
+    console.log(this.props)
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {

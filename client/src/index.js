@@ -9,7 +9,6 @@ import Page from "./Page";
 import "./style/lib/animate.css";
 import "./style/antd/index.less";
 import "./style/index.less";
-
 // redux 注入操作
 const middleware = [thunk];
 const store = createStore(reducer, applyMiddleware(...middleware));

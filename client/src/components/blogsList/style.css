@@ -1,0 +1,14 @@
+.title {
+  width: 100%;
+  height: 60px;
+  line-height: 80px;
+  text-align: center;
+}
+.rows {
+  height: 60px;
+  line-height: 60px;
+}
+.rows .labels {
+  text-align: right;
+  margin-right: 30px;
+}

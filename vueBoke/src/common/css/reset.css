@@ -177,13 +177,13 @@ body {
   font-family:"Microsoft YaHei", Arial, Helvetica, sans-serif;
 }
 
-body {
+/* body {
   cursor: url(1.png), default
 }
 
 a:hover {
   cursor: url(2.png), pointer
-}
+} */
 
 .clearfloat:after {
   display: block;

@@ -25,16 +25,21 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-mongoose.connect('mongodb://localhost:27017/blog', function (err) {
-  if (err) {
-    console.log('数据库连接失败')
-  } else {
-    console.log('数据库连接成功')
-    server.listen(port);
-    server.on('error', onError);
-    server.on('listening', onListening);
+mongoose.connect(
+  'mongodb://127.0.0.1:27017/blog', {
+    useNewUrlParser: true
+  },
+  function (err) {
+    if (err) {
+      console.log('数据库连接失败');
+    } else {
+      server.listen(port);
+      server.on('error', onError);
+      server.on('listening', onListening);
+      console.log('数据库连接成功');
+    }
   }
-});
+);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -65,9 +70,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string' ?
-    'Pipe ' + port :
-    'Port ' + port;
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -90,8 +93,6 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string' ?
-    'pipe ' + addr :
-    'port ' + addr.port;
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }

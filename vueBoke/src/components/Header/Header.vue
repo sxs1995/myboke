@@ -2,7 +2,7 @@
   <div class="header">
     <div class="nav clearfloat">
       <div class="leftNav">
-        <a href="/home">沈宪帅个人博客</a>
+        <a href="/home">个人博客</a>
       </div>
       <div class="rightNav">
         <ul>

@@ -7,6 +7,8 @@ import Dashboard from './dashboard/Dashboard';
 import AuthBasic from './auth/Basic';
 import RouterEnter from './auth/RouterEnter';
 import PersonSet from './personSet/personSet';
+import BlogsList from './blogsList/blogsList';
+import Writeblogs from './blogsList/writeBlogs';
 
 export default {
     Buttons,
@@ -14,5 +16,7 @@ export default {
     AuthBasic,
     RouterEnter,
     Category,
-    PersonSet
+    PersonSet,
+    BlogsList,
+    Writeblogs
 }
