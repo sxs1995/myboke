@@ -41,9 +41,7 @@ export default class CRouter extends Component {
                                     />
                                 )
                             }
-                            console.log(r.component ? route(r) : r.subs.map(r => route(r)))
                             return r.component ? route(r) : r.subs.map(r => route(r));
-                            
                         })
                     )
                 }

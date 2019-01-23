@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user')
-var Category = require('../models/category')
 
 //统一返回格式
 var reposneData;

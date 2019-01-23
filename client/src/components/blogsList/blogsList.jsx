@@ -85,7 +85,7 @@ class BlogsList extends React.Component {
 		var _this = this;
 		_this.setState({ loading2: true });
 		axios
-			.post(BASE_URL + '/category/list', { pagesize: 10, ...params })
+			.post(BASE_URL + '/blogs/getBlogsList', { pagesize: 10, ...params })
 			.then(res => {
 				if (res.data.code === '00000') {
 					let pagination = { ..._this.state.pagination };
@@ -216,16 +216,22 @@ class BlogsList extends React.Component {
 	render() {
 		const columns = [
 			{
-				title: '序号',
-				dataIndex: 'code',
+				title: '标题',
+				dataIndex: 'title',
 				align: 'center',
-				key: 'code',
+				key: 'title',
 			},
 			{
-				title: '分类名称',
-				dataIndex: 'name',
+				title: '类别',
+				dataIndex: 'category.name',
 				align: 'center',
-				key: 'name',
+				key: 'category.name',
+			},
+			{
+				title: '缩略图',
+				dataIndex: 'imgs',
+				align: 'center',
+				key: 'imgs',
 			},
 			{
 				title: '操作',

@@ -5,6 +5,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser') // 加载body-parser用于处理前端传来的数据
 var usersRouter = require('./routes/users');
 var categoryRouter = require('./routes/category');
+var uploadRouter = require('./routes/upload');
+var blogsRouter = require('./routes/blogs');
 var app = express();
 // 解析 application/json
 // app.use(bodyParser.json());
@@ -15,7 +17,7 @@ app.use(bodyParser.urlencoded({
 var allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*'); //自定义中间件，设置跨域需要的响应头。
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
     next();
 };
 app.use(allowCrossDomain); //运用跨域的中间件
@@ -29,5 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/category', categoryRouter);
+app.use('/upload', uploadRouter);
+app.use('/blogs', blogsRouter);
 
 module.exports = app;
