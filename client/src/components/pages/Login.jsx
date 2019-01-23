@@ -19,7 +19,7 @@ class Login extends React.Component {
 		if (nextAuth.data && nextAuth.data.uid) {
 			// 判断是否登陆
 			localStorage.setItem('user', JSON.stringify(nextAuth.data));
-			history.push('/app/dashboard/index');
+			history.push('/app/blogsList');
 		}
 	}
 	// 登录

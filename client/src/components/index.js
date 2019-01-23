@@ -9,6 +9,7 @@ import RouterEnter from './auth/RouterEnter';
 import PersonSet from './personSet/personSet';
 import BlogsList from './blogsList/blogsList';
 import Writeblogs from './blogsList/writeBlogs';
+import WatchBlogs from './blogsList/watchblogs';
 
 export default {
     Buttons,
@@ -18,5 +19,6 @@ export default {
     Category,
     PersonSet,
     BlogsList,
-    Writeblogs
+    Writeblogs,
+    WatchBlogs
 }

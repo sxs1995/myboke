@@ -5,6 +5,7 @@
  * @Last Modified time: 2019-01-07 10:46:47
  */
 var mongoose = require('mongoose')
+var moment = require('moment')
 //用户的表结构
 
 module.exports = new mongoose.Schema({
@@ -14,6 +15,7 @@ module.exports = new mongoose.Schema({
     // 更新时间
     createAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
+        get:v=>moment(v).format('yyyy-MM-dd hh:mm:ss')
     }
 })

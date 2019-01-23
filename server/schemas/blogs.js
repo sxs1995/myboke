@@ -3,12 +3,14 @@ var Schema = mongoose.Schema;
 //用户的表结构
 
 module.exports = new mongoose.Schema({
+    // 访问量
+    pgview: Number,
     //标题
     title: String,
     // 类别
     category: {
-        type:Schema.Types.ObjectId,
-        ref:"category"
+        type: Schema.Types.ObjectId,
+        ref: "category"
     },
     //预览图
     imgs: String,
@@ -17,6 +19,7 @@ module.exports = new mongoose.Schema({
     // 更新时间
     createAt: {
         type: Date,
-        default: new Date().toLocaleDateString()
-    }
+        default: Date.now()
+    },
+    markdown: String
 })

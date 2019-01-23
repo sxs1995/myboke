@@ -1,10 +1,12 @@
 import React from 'react';
-import { Row, Col, Input, Select, Upload, Icon, Button } from 'antd';
+import { Row, Col, Input, Select, Upload, Icon, Button, message } from 'antd';
 import Style from './style.css';
 import Editor from 'for-editor';
 import marked from '../../utils/marked';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/index';
+import BreadcrumbCustom from '../common/BreadcrumbCustom';
+import history from '../../routes/history';
 class WriteBlog extends React.Component {
 	constructor(props) {
 		super(props);
@@ -19,6 +21,31 @@ class WriteBlog extends React.Component {
 
 	componentDidMount() {
 		var _this = this;
+		let id = this.props.match.params.id;
+		if (id) {
+			axios
+				.post(BASE_URL + '/blogs/getDetail', { id: id })
+				.then(res => {
+					console.log(res.data);
+					let data = res.data.rows;
+					if (res.data.code === '00000') {
+						_this.setState({
+							id: id,
+							blog: data,
+							title: data.title,
+							currency: data.category._id,
+							value: data.markdown,
+						});
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
+
+		/**
+		 * 查询分类列表
+		 */
 		axios
 			.post(BASE_URL + '/category/list', { pagesize: 20, page: 1 })
 			.then(res => {
@@ -28,15 +55,6 @@ class WriteBlog extends React.Component {
 						category: res.data.rows,
 					});
 				}
-			})
-			.catch(err => {
-				console.log(err);
-			});
-
-		axios
-			.post(BASE_URL + '/blogs/getDetail', { id:'5c46d5cf3dd22750dcdc2709' })
-			.then(res => {
-				console.log(res.data)
 			})
 			.catch(err => {
 				console.log(err);
@@ -64,9 +82,7 @@ class WriteBlog extends React.Component {
 	/**
 	 * 定义图片上传要求
 	 */
-	beforeUpload = file => {
-		const isJPG = file.type === 'image/jpeg';
-	};
+	beforeUpload = file => {};
 
 	/**
 	 * 图片上传
@@ -108,19 +124,32 @@ class WriteBlog extends React.Component {
 	 * 发布文章
 	 */
 	public = () => {
-		axios
-			.post(BASE_URL + '/blogs/addblogs', {
-				title: this.state.title,
-				category: this.state.currency,
-				imgs: this.state.filepath,
-				blogs: marked(this.state.value),
-			})
-			.then(res => {
-				console.log(res);
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		if (this.state.id) {
+			console.log(111111111111);
+		} else {
+			axios
+				.post(BASE_URL + '/blogs/addblogs', {
+					title: this.state.title,
+					category: this.state.currency,
+					imgs: this.state.filepath,
+					blogs: marked(this.state.value),
+					markdown: this.state.value,
+				})
+				.then(res => {
+					console.log(res);
+					if (res.data.code === '00000') {
+						message.success('发布成功');
+						setTimeout(() => {
+							history.push('/app/blogsList');
+						}, 2000);
+					} else {
+						message.error(res.data.message);
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
 	};
 
 	render() {
@@ -134,6 +163,7 @@ class WriteBlog extends React.Component {
 		const { value } = this.state;
 		return (
 			<div>
+				{/* <BreadcrumbCustom first="博客管理" href="/app/blogsList" second="发布博客" /> */}
 				<h1 className={Style.title}>
 					发布博客
 					<Button className={Style.publish} type="primary" onClick={this.public}>

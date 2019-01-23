@@ -3,6 +3,7 @@ import { Form, Row, Col, Card, Table, Button, Modal, Input } from 'antd';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/index';
 import history from '../../routes/history';
+import { withRouter } from 'react-router-dom';
 const confirm = Modal.confirm;
 class BlogsList extends React.Component {
 	constructor(props) {
@@ -80,7 +81,9 @@ class BlogsList extends React.Component {
 		});
 	};
 
-	//   查询分类列表
+	/**
+	 * 查询分类列表
+	 */
 	fetch = (params = {}) => {
 		var _this = this;
 		_this.setState({ loading2: true });
@@ -104,6 +107,7 @@ class BlogsList extends React.Component {
 				console.log(err);
 			});
 	};
+
 	/**
 	 * 删除提示
 	 */
@@ -120,14 +124,17 @@ class BlogsList extends React.Component {
 			},
 		});
 	};
-	// 删除
+
+	/**
+	 * 删除
+	 */
 	deleteRow = record => {
 		console.log(record);
 		var _this = this,
 			pagination = _this.state.pagination;
 		_this.showDeleteConfirm(() => {
 			axios
-				.post(BASE_URL + '/category/delete', { id: [record._id] })
+				.post(BASE_URL + '/blogs/deleteBlogs', { id: [record._id] })
 				.then(res => {
 					if (res.data.code === '00000') {
 						_this.fetch({
@@ -144,9 +151,28 @@ class BlogsList extends React.Component {
 	};
 
 	/**
+	 * 查看详情
+	 */
+	watchDetail = record => {
+		// history.push('/app/watchblogs/'+record._id);
+		console.log(record._id);
+		history.push({
+			pathname: '/app/watchblogs/' + record._id,
+		});
+	};
+
+	/**
+	 * 编辑博客
+	 */
+	editRow = record => {
+		history.push({
+			pathname: '/app/writeblogs/' + record._id,
+		});
+	};
+
+	/**
 	 * 成功提示
 	 * */
-
 	delSuccess = msg => {
 		const modal = Modal.success({ title: '提示', content: msg });
 		setTimeout(() => {
@@ -168,7 +194,7 @@ class BlogsList extends React.Component {
 		_this.showDeleteConfirm(() => {
 			if (rows && rows.length > 0) {
 				axios
-					.post(BASE_URL + '/category/delete', { id: [data] })
+					.post(BASE_URL + '/blogs/deleteBlogs', { id: [data] })
 					.then(res => {
 						if (res.data.code === '00000') {
 							_this.fetch({
@@ -186,10 +212,12 @@ class BlogsList extends React.Component {
 		});
 	};
 
+	/**
+	 * 点击选中行
+	 */
 	selectRow = record => {
 		const selectedRowKeys = [...this.state.selectedRowKeys];
 		const selectedRows = [...this.state.selectedRows];
-		console.log(selectedRowKeys.indexOf(record.key));
 		if (selectedRowKeys.indexOf(record.key) >= 0) {
 			selectedRowKeys.splice(selectedRowKeys.indexOf(record.key), 1);
 			selectedRows.forEach((e, i) => {
@@ -202,8 +230,6 @@ class BlogsList extends React.Component {
 			selectedRows.push(record);
 		}
 
-		console.log(selectedRowKeys);
-		console.log(selectedRows);
 		this.setState({ selectedRowKeys });
 		this.setState({ selectedRows });
 	};
@@ -239,11 +265,14 @@ class BlogsList extends React.Component {
 				key: 'action',
 				render: (text, record, index) => (
 					<span>
-						<Button type="primary">
+						<Button type="primary" onClick={() => this.editRow(record)}>
 							编辑
 						</Button>
 						<Button type="danger" onClick={() => this.deleteRow(record)}>
 							删除
+						</Button>
+						<Button type="dashed" onClick={() => this.watchDetail(record)}>
+							查看详情
 						</Button>
 					</span>
 				),
@@ -263,7 +292,7 @@ class BlogsList extends React.Component {
 						<div className="gutter-box">
 							<Card title="博客管理" bordered={false}>
 								<div className="table-operations">
-									<Button onClick={this.writeblogs} >写博客</Button>
+									<Button onClick={this.writeblogs}>写博客</Button>
 									<Button onClick={this.deletes}>删除</Button>
 								</div>
 								<Table
@@ -288,4 +317,4 @@ class BlogsList extends React.Component {
 	}
 }
 
-export default BlogsList;
+export default withRouter(BlogsList);

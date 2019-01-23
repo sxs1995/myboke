@@ -1,9 +1,31 @@
+.MinHeight {
+  min-height: 600px;
+  background: #fff;
+  padding: 20px 80px;
+}
 .title {
   width: 100%;
   height: 60px;
   line-height: 80px;
   text-align: center;
   position: relative;
+  font-weight: bold;
+  font-size: 32px;
+}
+.mgtop {
+  margin-top: 30px;
+}
+.mgleft {
+  margin-left: 40px;
+}
+.bgColor {
+  background: #fff;
+  padding: 20px 80px;
+}
+.intro {
+  text-align: center;
+  line-height: 40px;
+  border-bottom: 1px dashed #f2f2f2;
 }
 .publish {
   color: #19a3fe;

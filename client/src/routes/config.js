@@ -101,6 +101,21 @@ export default {
             key: '/app/writeblogs',
             title: '写博客',
             component: 'Writeblogs',
+        },
+        {
+            key: '/app/writeblogs/:id',
+            title: '写博客',
+            component: 'Writeblogs',
+        },
+        {
+            key: '/app/watchblogs/:id',
+            title: '写博客',
+            component: 'WatchBlogs',
+        },
+        {
+            key: '/app/watchblogs',
+            title: '写博客',
+            component: 'WatchBlogs',
         }
     ] // 非菜单相关路由
 }

@@ -19,23 +19,25 @@ router.use(function (req, res, next) {
 /** 
  * 发布博客
  */
-
 router.post('/addblogs', function (req, res) {
     console.log(req.body.category)
     let title = req.body.title || '';
     let category = req.body.category || '';
     let imgs = req.body.imgs || '';
     let blogs = req.body.blogs || '';
-    console.log(path.join(__dirname, "../public/upload"))
-    exists = fs.existsSync(path.join(__dirname, "../public/upload"));
-    if (!exists) {
-        fs.mkdirSync(path.join(__dirname, "../public/upload"));
-    }
-    var textname = new Date().getTime() + '.txt';
-    var url = path.join(__dirname, "../public/upload/") + textname;
-    fs.writeFileSync(url, blogs)
-    reposneData.url = "/public/upload/" + textname;
-
+    let markdown = req.body.markdown || '';
+    /** 
+     * 将博客存为txt文档将地址存到数据库
+     */
+    // exists = fs.existsSync(path.join(__dirname, "../public/upload"));
+    // if (!exists) {
+    //     fs.mkdirSync(path.join(__dirname, "../public/upload"));
+    // }
+    // var textname = new Date().getTime() + '.txt';
+    // var url = path.join(__dirname, "../public/upload/") + textname;
+    // fs.writeFileSync(url, blogs)
+    // reposneData.url = "/public/upload/" + textname;
+    /*************************************************/
     if (title === '') {
         reposneData.code = "00001";
         reposneData.message = "标题不能为空";
@@ -56,7 +58,10 @@ router.post('/addblogs', function (req, res) {
             title: title,
             category: category,
             imgs: imgs,
-            blogs: reposneData.url
+            pgview:0,
+            markdown:markdown,
+            // blogs: reposneData.url, //将文档地址存到数据库里
+            blogs: blogs //直接将博客内容存到数据库
         });
         Blog
             .save()
@@ -80,7 +85,7 @@ router.post('/getDetail', function (req, res) {
     let id = req.body.id
     Blogs.findOne({
         _id: id
-    }).then((r) => {
+    }).populate('category').then((r) => {
         console.log(r)
         if (!r) {
             reposneData.code = "00001";
@@ -88,34 +93,65 @@ router.post('/getDetail', function (req, res) {
             res.json(reposneData);
             return;
         } else {
-            reposneData.code = '00000';
-            reposneData.message = "请求成功";
-            reposneData.rows = {
-                title: r.title,
-                imgs: r.imgs,
-                category: '',
-                categoryId: r.category,
-                blogs: ''
-            }
-            Category.findOne({
-                _id: r.category
-            }).then((q) => {
-                reposneData.rows.category = q.name;
+            console.log(r.pgview + 1)
+            Blogs.update({
+                _id: id
+            }, {
+                pgview: r.pgview + 1
+            }).then(() => {
+                reposneData.code = '00000';
+                reposneData.message = "请求成功";
+                reposneData.rows = r;
+                res.json(reposneData)
+                /** 
+                 * 根据数据库存储文件名读取博客内容
+                 */
+                // fs.readFile(path.join(__dirname, "../") + r.blogs, 'utf-8', function (err, data) {
+                //     if (err) {
+                //         console.error(err);
+                //     } else {
+                //         reposneData.rows.blogs = data;
+                //         res.json(reposneData)
+                //     }
+                // });
             })
-            /** 
-             * 根据数据库存储文件名读取博客内容
-             */
-            fs.readFile(path.join(__dirname, "../") + r.blogs, 'utf-8', function (err, data) {
-                if (err) {
-                    console.error(err);
-                } else {
-                    reposneData.rows.blogs = data;
-                    res.json(reposneData)
-                }
-            });
         }
     })
 })
+
+/** 
+ * 删除博客
+ */
+router.post("/deleteBlogs", (req, res) => {
+    var idArray = req.body.id;
+    Blogs.find({
+        _id: {
+            $in: idArray
+        }
+    }).then(r => {
+        if (r.length == 0) {
+            reposneData.code = "00002";
+            reposneData.message = "分类信息不存在";
+            res.json(reposneData);
+            return Promise.reject();
+        } else {
+            Blogs.remove({
+                    _id: {
+                        $in: idArray
+                    }
+                })
+                .then(() => {
+                    reposneData.code = "00000";
+                    reposneData.message = "删除成功";
+                    res.json(reposneData);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    });
+});
+
 
 
 /** 
@@ -155,6 +191,7 @@ router.post('/getBlogsListByCy', function (req, res) {
     Blogs.find({
             category: '5c45398fdf111b5b60ab7c2e'
         })
+        .populate('category')
         .sort({
             _id: 1
         })
@@ -170,7 +207,7 @@ router.post('/getBlogsListByCy', function (req, res) {
         category: '5c45398fdf111b5b60ab7c2e'
     }).count().then(count => {
         reposneData.total = count;
-    }).then(()=>{
+    }).then(() => {
         res.json(reposneData);
         return;
     })
