@@ -2,7 +2,7 @@
 	<div class="tag">
 		<h2 class="hometitle">标签</h2>
 		<ul>
-				<a href="" v-for="item in category" v-bind:key="item._id">{{item.name}}</a>
+			<a v-for="item in category" v-bind:key="item._id" @click="tagTouch(item._id)">{{item.name}}</a>
 		</ul>
 	</div>
 </template>
@@ -12,7 +12,7 @@ import axios from 'axios';
 import { BASE_URL } from 'api/index';
 export default {
 	data() {
-		return {   
+		return {
 			category: [],
 		};
 	},
@@ -32,7 +32,11 @@ export default {
 				console.log(err);
 			});
 	},
-	methods: {},
+	methods: {
+		tagTouch(id) {
+			this.$router.push({ path: '/blogList/' + id });
+		},
+	},
 };
 </script>
 

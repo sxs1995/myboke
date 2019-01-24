@@ -47,8 +47,8 @@ export default new Router({
       right: Intro
     }
   }, {
-    path: '/blog',
-    name: 'blog',
+    path: '/blogList/:category',
+    name: 'blogList',
     components: {
       default: blogList,
       right: Intro

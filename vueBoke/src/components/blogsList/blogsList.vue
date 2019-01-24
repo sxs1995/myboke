@@ -3,31 +3,31 @@
 		<ul>
 			<li class="blogs" v-for="item in blogsList" :key="item._id" @click="toDetail(item._id)">
 				<!-- <router-link to="/detail/" > -->
-					<h3 class="blogtitle">
-						<a href="" target="_blank">{{item.title}}</a>
-					</h3>
-					<span class="blogpic" v-if="item.imgs">
-						<a href="">
-							<img
-								src="http://www.yangqq.com/d/file/jstt/web/2018-06-30/5b9a6da35e0224bcb901358f515ece47.png"
-								alt="item.title"
-							>
-						</a>
-					</span>
-					<!-- v-html="item.blogs" -->
-					<p class="blogtext">{{item.blog}}</p>
-					<div class="bloginfo">
-						<ul>
-							<li class="lmname">
-								<a href="" target="">{{item.category.name}}</a>
-							</li>
-							<li class="timer">{{item.time}}</li>
-							<li class="view">
-								<span>{{item.pgview}}</span>
-								已阅读
-							</li>
-						</ul>
-					</div>
+				<h3 class="blogtitle">
+					<a href="" target="_blank">{{item.title}}</a>
+				</h3>
+				<span class="blogpic" v-if="item.imgs">
+					<a href="">
+						<img
+							src="http://www.yangqq.com/d/file/jstt/web/2018-06-30/5b9a6da35e0224bcb901358f515ece47.png"
+							alt="item.title"
+						>
+					</a>
+				</span>
+				<!-- v-html="item.blogs" -->
+				<p class="blogtext">{{item.blog}}</p>
+				<div class="bloginfo">
+					<ul>
+						<li class="lmname">
+							<a href="" target="">{{item.category.name}}</a>
+						</li>
+						<li class="timer">{{item.time}}</li>
+						<li class="view">
+							<span>{{item.pgview}}</span>
+							已阅读
+						</li>
+					</ul>
+				</div>
 				<!-- </router-link> -->
 			</li>
 		</ul>
@@ -44,7 +44,7 @@
 
 <script>
 import axios from 'axios';
-import { BASE_URL,moment } from 'api/index';
+import { BASE_URL, moment } from 'api/index';
 export default {
 	data() {
 		return {
@@ -54,8 +54,17 @@ export default {
 			limit: 10,
 		};
 	},
+	computed: {},
 	mounted() {
-		this.getBlogsList({ page: 1 });
+		let category = this.$route.params.category;
+		console.log(category);
+		if (category) {
+			// /getBlogsListByCy
+			this.category = category;
+			this.getBlogsListByCg({ category: category, page: 1 });
+		} else {
+			this.getBlogsList({ page: 1 });
+		}
 	},
 	methods: {
 		getBlogsList(params) {
@@ -77,8 +86,28 @@ export default {
 					console.log(err);
 				});
 		},
-		toDetail(id){
-			this.$router.push({ path: "/detail/"+id})
+		getBlogsListByCg(params) {
+			let _this = this;
+			axios
+				.post(BASE_URL + '/blogs/getBlogsListByCy', { pagesize: 5, ...params })
+				.then(res => {
+					if (res.data.code === '00000') {
+						let blogs = res.data.rows;
+						for (let i = 0; i < blogs.length; i++) {
+							blogs[i].blog = _this.getText(blogs[i].blogs);
+							blogs[i].time = moment(blogs[i].createAt);
+						}
+						_this.blogsList = blogs;
+						_this.limit = res.data.total;
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		},
+
+		toDetail(id) {
+			this.$router.push({ path: '/detail/' + id });
 		},
 		getText(html_str) {
 			var re = new RegExp('<[^<>]+>', 'g');
@@ -87,7 +116,11 @@ export default {
 			return text;
 		},
 		currentChange() {
-			this.getBlogsList({ page: this.currentPage });
+			if (this.category) {
+				this.getBlogsListByCg({ category: this.category, page: this.currentPage });
+			} else {
+				this.getBlogsList({ page: this.currentPage });
+			}
 		},
 	},
 };

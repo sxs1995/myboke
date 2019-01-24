@@ -9,9 +9,6 @@
           <li>
             <router-link to="/home" >网站首页</router-link>
           </li>
-          <!-- <li>
-            <router-link to="/blog">博客日记</router-link>
-          </li> -->
           <li>
             <router-link to="/blogList">学无止境</router-link>
           </li>

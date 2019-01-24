@@ -6,7 +6,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import iView from 'iview'
 // import 'iview/dist/styles/iview.css'
 import '@/common/css/reset.css'
+import Vuex from 'vuex'
+import store from './vuex/store'
 
+Vue.use(Vuex)
 Vue.use(iView)
 Vue.use(ElementUI)
 
@@ -23,5 +26,6 @@ router.afterEach(route => {
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

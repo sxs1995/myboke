@@ -126,7 +126,7 @@ router.post('/editblogs', function (req, res) {
                     reposneData.code = "00000";
                     reposneData.message = "修改成功";
                     res.json(reposneData);
-                }).catch(err=>{
+                }).catch(err => {
                     console.log(err)
                 })
             }
@@ -246,32 +246,32 @@ router.post('/getBlogsList', function (req, res) {
 router.post('/getBlogsListByCy', function (req, res) {
     var pagesize = parseInt(req.body.pagesize),
         page = parseInt(req.body.page),
+        category = req.body.category,
         skips = (page - 1) * pagesize;
+    console.log(category)
     Blogs.find({
-            category: '5c45398fdf111b5b60ab7c2e'
+            category: category
         })
-        .populate('category')
         .sort({
             _id: 1
         })
         .skip(skips)
         .limit(pagesize)
         .then(blogs => {
+            console.log(blogs)
             reposneData.rows = blogs;
         })
         .catch(err => {
             console.log(err);
         });
     Blogs.find({
-        category: '5c45398fdf111b5b60ab7c2e'
-    }).count().then(count => {
+        category: category
+    }).countDocuments().then(count => {
         reposneData.total = count;
     }).then(() => {
         res.json(reposneData);
         return;
     })
 })
-
-
 
 module.exports = router;
