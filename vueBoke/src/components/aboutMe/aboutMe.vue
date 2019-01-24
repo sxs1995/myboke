@@ -21,7 +21,6 @@ export default {
 
 <style scoped lang="less">
 .aboutMe {
-  width: 100%;
   height: auto;
   background: #fff;
   overflow: hidden;

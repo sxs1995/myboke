@@ -3,6 +3,8 @@ import axios from 'axios';
 import { BASE_URL } from '../../utils/index';
 import { Row, Col } from 'antd';
 import Style from './style.css';
+import BreadcrumbCustom from '../common/BreadcrumbCustom';
+// import history from '../../routes/history';
 class WatchBlogs extends React.Component {
 	constructor() {
 		super();
@@ -33,6 +35,7 @@ class WatchBlogs extends React.Component {
 	render() {
 		return (
 			<div> 
+				<BreadcrumbCustom first="博客管理" href="/app/blogsList" second="发布博客" />
 				<Row className={Style.mgtop}>
 					<Col span={18} offset={3} className={Style.bgColor}>
 						<h1 className={Style.title}>{this.state.blog.title}</h1>

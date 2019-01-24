@@ -25,7 +25,7 @@ export default {
 .blogroll {
   margin-bottom: 20px;
   padding: 20px 15px;
-  height: 294px;
+  height: auto;
   width: 300px;
   border-radius: 7px;
   background: #fff;

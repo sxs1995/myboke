@@ -6,6 +6,7 @@ import Intro from '@/components/Intro/Intro'
 import timeLine from '@/components/timeLine/timeLine'
 import aboutMe from '@/components/aboutMe/aboutMe'
 import blogList from '@/components/blogsList/blogsList'
+import detail from '@/components/detail/detail'
 Vue.use(Router)
 
 export default new Router({
@@ -50,6 +51,13 @@ export default new Router({
     name: 'blog',
     components: {
       default: blogList,
+      right: Intro
+    }
+  }, {
+    path: '/detail/:id',
+    name: 'detail',
+    components: {
+      default: detail,
       right: Intro
     }
   }]

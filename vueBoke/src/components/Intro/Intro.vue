@@ -36,13 +36,14 @@ export default {
   background: #fff;
   margin-bottom: 20px;
   overflow: hidden;
-  height: 194px;
+  height: auto;
+  width: 330px;
   border-radius: 7px;
   //   margin-top: 20px;
   h2 {
     color: #000;
     font-size: 18px;
-    line-height: 46px;
+    // line-height: 46px;
     padding-left: 20px;
     background: #fff;
   }

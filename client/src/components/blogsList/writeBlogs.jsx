@@ -125,7 +125,28 @@ class WriteBlog extends React.Component {
 	 */
 	public = () => {
 		if (this.state.id) {
-			console.log(111111111111);
+			axios
+			.post(BASE_URL + '/blogs/editblogs', {
+				id:this.state.id,
+				title: this.state.title,
+				category: this.state.currency,
+				imgs: this.state.filepath,
+				blogs: marked(this.state.value),
+				markdown: this.state.value,
+			})
+			.then(res => {
+				if (res.data.code === '00000') {
+					message.success('编辑成功');
+					setTimeout(() => {
+						history.push('/app/blogsList');
+					}, 2000);
+				} else {
+					message.error(res.data.message);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		} else {
 			axios
 				.post(BASE_URL + '/blogs/addblogs', {
@@ -163,7 +184,7 @@ class WriteBlog extends React.Component {
 		const { value } = this.state;
 		return (
 			<div>
-				{/* <BreadcrumbCustom first="博客管理" href="/app/blogsList" second="发布博客" /> */}
+				<BreadcrumbCustom first="博客管理" href="/app/blogsList" second="发布博客" />
 				<h1 className={Style.title}>
 					发布博客
 					<Button className={Style.publish} type="primary" onClick={this.public}>

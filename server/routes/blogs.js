@@ -58,8 +58,8 @@ router.post('/addblogs', function (req, res) {
             title: title,
             category: category,
             imgs: imgs,
-            pgview:0,
-            markdown:markdown,
+            pgview: 0,
+            markdown: markdown,
             // blogs: reposneData.url, //将文档地址存到数据库里
             blogs: blogs //直接将博客内容存到数据库
         });
@@ -76,6 +76,65 @@ router.post('/addblogs', function (req, res) {
             });
     }
 })
+
+/** 
+ * 编辑博客
+ */
+router.post('/editblogs', function (req, res) {
+    let id = req.body.id;
+    let title = req.body.title || '';
+    let category = req.body.category || '';
+    let imgs = req.body.imgs || '';
+    let blogs = req.body.blogs || '';
+    let markdown = req.body.markdown || '';
+    if (title === '') {
+        reposneData.code = "00001";
+        reposneData.message = "标题不能为空";
+        res.json(reposneData);
+        return;
+    } else if (category === '') {
+        reposneData.code = "00002";
+        reposneData.message = "类别不能为空";
+        res.json(reposneData);
+        return;
+    } else if (blogs === '') {
+        reposneData.code = "00003";
+        reposneData.message = "内容不能为空";
+        res.json(reposneData);
+        return;
+    } else {
+        Blogs.findOne({
+            _id: id
+        }).then(blog => {
+            console.log(blog)
+            if (!blog) {
+                reposneData.code = "00002";
+                reposneData.message = "分类信息不存在";
+                res.json(reposneData);
+                return Promise.reject();
+            } else {
+                Blogs.update({
+                    _id: id
+                }, {
+                    title: title,
+                    category: category,
+                    imgs: imgs,
+                    blogs: blogs,
+                    markdown: markdown
+                }).then((r) => {
+                    console.log(r)
+                    reposneData.code = "00000";
+                    reposneData.message = "修改成功";
+                    res.json(reposneData);
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }
+        });
+    }
+})
+
+
 
 /** 
  * 根据id查询博客详情

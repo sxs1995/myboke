@@ -142,11 +142,10 @@ router.post("/edit", function (req, res) {
             res.json(reposneData);
             return Promise.reject();
         } else {
-            Category.update({
+            Category.updateOne({
                 _id: id
             }, {
-                code: code
-            }, {
+                code: code,
                 name: name
             }).then(() => {
                 reposneData.code = "00000";

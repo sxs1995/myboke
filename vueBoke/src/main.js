@@ -4,7 +4,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import iView from 'iview'
-import 'iview/dist/styles/iview.css'
+// import 'iview/dist/styles/iview.css'
 import '@/common/css/reset.css'
 
 Vue.use(iView)
